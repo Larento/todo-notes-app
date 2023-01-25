@@ -1,81 +1,567 @@
+/* Small CSS reset */
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Main elements styles */
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+	color: #213547;
+	background-color: #ffffff;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+	font-family: 'Avenir Next Cyr', Montserrat, ArialBlack, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+	margin: 0;
+	min-height: 100vh;
+}
+
+h1, h2 {
+	font-weight: 500;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+	font-size: 2em;
+	line-height: 1.1;
+}
+
+h2 {
+	font-size: 1.5em;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
 }
 
-.card {
-  padding: 2em;
+*:focus-visible {
+	outline: 4px auto orange;
 }
 
+/* Component styles */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+	position: relative;
+	min-height: 100%;
+	margin: 0 auto;
+}
+
+.debug-container {
+	position: fixed;
+	z-index: 10;
+	display: flex;
+	flex-direction: row;
+	height: 25ch;
+	gap: 1em;
+	bottom: 0;
+	left: 0;
+	padding-inline: 1em;
+	background: #000000AF;
+	color: white;
+}
+
+.debug {
+	width: 60ch;
+	overflow: scroll;
+	padding: 1em;
+	font-size: 0.7rem;
+	font-family: 'Menlo';
+	line-height: 1;
+}
+
+.action-button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.action-button button {
+	display: grid;
+	place-items: center;
+	width: 2.5em;
+	height: 2.5em;
+	padding: 0.6em;
+	background: #FFFFFF2F;
+	border-radius: 0.5em;
+	border: none;
+	box-shadow: 0 0.5em 0.1em #00000012;
+	transition: border-color 0.1s, transform 0.1s;
+}
+
+.action-button .icon {
+	width: 100%;
+	height: 100%;
+	fill: #191970AE;
+	transition: fill 0.1s;
+}
+
+.action-button button:disabled {
+	cursor: not-allowed;
+	background: #0000001F;
+	box-shadow: none;
+}
+
+.action-button button:hover:not(:disabled) .icon,
+.action-button button:active:not(:disabled) .icon {
+	fill: #F0F8FFFF;
+}
+
+.action-button label {
+	text-align: center;
+	font-size: 0.8em;
+}
+
+.action-button label:has(~ button:disabled) {
+	color: #000000AF;
+}
+
+.action-button button:active:not(:disabled) {
+	transform: translateY(0.05em);
+}
+
+.editable-paragraph {
+	resize: none;
+	overflow: hidden;
+	width: 100%;
+
+	background: none;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 500;
+	line-height: inherit;
+}
+
+.editable-paragraph:not(:disabled):focus,
+.editable-paragraph:not(:disabled):active {
+	margin-bottom: -1px;
+	border-bottom: solid 1px #0000006F;
+	outline: none;
+}
+
+.checkbox {
+	flex-shrink: 0;
+	width: 1.75em;
+	height: 1.75em;
+	padding: 0;
+	border-radius: 2em;
+	border: solid 0.1em #0000000E;
+	background: #0000001F;
+	transition: background 0.1s;
+	transform: none;
+}
+
+.checkbox.checked {
+	background: royalblue;
+	border: solid 0.1em #FFFFFF5F;
+}
+
+.checkbox .icon {
+	width: 100%;
+	height: 100%;
+	padding: 0.35em;
+	fill: aliceblue;
+}
+
+.todo-task, .note-preview {
+	padding: 1em;
+	background: whitesmoke;
+	border-radius: 0.25em;
+}
+
+.todo-task {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 1em;
+}
+
+.todo-task .editable-paragraph {
+	margin-top: 0.1em;
+}
+
+.todo-task:focus-within {
+	background: aliceblue;
+}
+
+.todo-controls {
+	display: flex;
+	flex-direction: row;
+	gap: 0.75em;
+}
+
+.todo-controls .action-button {
+	width: auto;
+	height: auto;
+}
+
+.todo-controls .action-button button,
+.modal .action-button button {
+	width: 1.75em;
+	height: 1.75em;
+	padding: 0.5em;
+	background: white;
+	box-shadow: none;
+	border-radius: 2em;
+}
+
+.todo-controls .action-button button:hover .icon,
+.todo-controls .action-button button:focus .icon {
+	fill: black;
+}
+
+.todo-controls .action-button button:active .icon {
+	fill: white;
+}
+
+.todo-controls .action-button.remove button:active {
+	background: orangered;
+}
+
+.todo-controls .action-button.add button:active {
+	background: yellowgreen;
+}
+
+.todo-controls .action-button button:active {
+	transform: none;
+}
+
+.todo-controls .action-button label {
+	display: none;
+}
+
+.todo-controls .icon {
+	fill: #0000007E;
+}
+
+.notes-page-container {
+	height: 100%;
+	padding-bottom: 1.5em;
+}
+
+.notes-container {
+	position: relative;
+	display: grid;
+	gap: 1.5em;
+	grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
+	max-width: 120ch;
+	margin: auto;
+	padding: 1.5em;
+	background: #FFFFFF;
+}
+
+.no-items-notice {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	height: 100%;
+	margin: auto;
+}
+
+.no-items-notice h2 {
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.note-preview {
+	--bg-color: whitesmoke;
+	box-sizing: content-box;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	align-items: flex-start;
+	padding: 1.5em;
+	background: var(--bg-color);
+	overflow: hidden;
+	transition: transform 0.2s;
+}
+
+.note-preview:hover {
+	--bg-color: aliceblue;
+}
+
+.note-preview:active,
+.note-preview.current {
+	--bg-color: #2C3E4C;
+	color: white;
+}
+
+.note-preview .checkbox {
+	font-size: 0.8rem;
+	transition: none;
+}
+
+.note-preview:is(:active, .current) .checkbox:not(.checked) {
+	background: #FFFFFF5F;
+}
+
+.note-preview:is(:active, .current) .checkbox.checked {
+	border-color: #6699CC;
+}
+
+.todos-preview-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8em;
+	width: 100%;
+	flex: 1;
+}
+
+.todo-preview {
+	display: flex;
+	flex-direction: row;
+	place-items: center;
+	gap: 0.5em;
+}
+
+.todo-preview p {
+	white-space: nowrap;
+}
+
+.note-title {
+	width: 100%;
+	position: relative;
+	text-align: left;
+	white-space: nowrap;
+	background: var(--bg-color);
+	font-size: 0.9em;
+	padding-bottom: 0.5em;
+}
+
+.note-preview::after {
+	position: absolute;
+	inset: 0;
+	left: unset;
+	width: 3em;
+	border-radius: inherit;
+	background: linear-gradient(to right, transparent, var(--bg-color) 50%);
+	content: '';
+}
+
+.empty-todos-preview,
+.empty-todo-preview,
+.empty-note-preview-title {
+	position: relative;
+	z-index: 1;
+	border-radius: 0.25em;
+	background: #0000000F;
+}
+
+
+.empty-todos-preview {
+	height: 100%;
+	font-size: 1.1rem;
+	color: slategray;
+	display: grid;
+	place-items: center;
+	min-height: 3em;
+}
+
+.empty-todo-preview {
+	width: 100%;
+	height: 90%;
+}
+
+.empty-note-preview-title {
+	height: 2em;
+}
+
+.todos-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+	max-width: 80ch;
+	min-height: 100%;
+	margin: auto;
+	padding: 1.5em;
+}
+
+.top-bar-container {
+	position: sticky;
+	top: 0;
+	background: royalblue;
+	z-index: 2;
+}
+
+.top-bar {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	place-items: center stretch;
+	gap: 1em;
+	max-width: 120ch;
+	margin: auto;
+	padding: 1.5em;
+	color: white;
+}
+
+.top-bar .editable-paragraph {
+	font-size: clamp(1.8em, 5vw, 1em);
+	color: white;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.top-bar .editable-paragraph::placeholder {
+	color: #F0F8FFCF;
+}
+
+.top-bar .editable-paragraph:focus {
+	background: #0000003F;
+}
+
+.top-bar .toolbar {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
+	top: -0.5em;
+}
+
+.modal-container {
+	display: grid;
+	place-items: center;
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	background: #000000AF;
+}
+
+.modal {
+	display: grid;
+	row-gap: 1.5em;
+	column-gap: 1em;
+	grid-template-areas:
+		"title title title title title cancel"
+		"message message message message message message"
+		"deny deny deny confirm confirm confirm";
+	background: #2C3E4C;
+	color: white;
+	padding: 1.5em 2em;
+	border-radius: 0.25em;
+	max-width: 40ch;
+}
+
+.modal .title {
+	grid-area: title;
+}
+
+.modal .message {
+	grid-area: message;
+}
+
+.modal .cancel {
+	grid-area: cancel;
+	justify-self: end;
+	font-size: 0.9rem;
+}
+
+.modal .deny {
+	grid-area: deny;
+	justify-self: start;
+}
+
+.modal .confirm {
+	grid-area: confirm;
+	justify-self: end;
+}
+
+.modal .action-button {
+	--bg-color: whitesmoke;
+	--text-color: currentColor;
+}
+
+.modal .action-button button:active {
+	transform: none;
+}
+
+.modal .action-button label {
+	display: none;
+}
+
+.modal .action-button:not(.cancel) button {
+	width: max-content;
+	height: auto;
+	min-width: 14ch;
+	padding: 0.75em;
+}
+
+.modal .action-button.cancel {
+	--bg-color: #FFFFFF2F;
+}
+
+.modal .action-button.cancel .icon {
+	fill: white;
+}
+
+.modal .action-button.deny button {
+	color: revert;
+}
+
+.modal .action-button.confirm {
+	--bg-color: #0492C2;
+	--text-color: white;
+}
+
+.modal .action-button button {
+	background: var(--bg-color);
+	color: var(--text-color);
+}
+
+@media only screen and (max-width: 600px) {
+	.notes-container, .todos-container {
+		padding: 1em;
+		gap: 1em;
+	}
+
+	.top-bar {
+		grid-template-columns: unset;
+		grid-template-rows: 1fr auto;
+		place-items: center stretch;
+		padding: 0.5em 1em;
+	}
+
+	.top-bar .toolbar {
+		margin:	auto;
+		top: -1em;
+	}
+
+	.todo-task .todo-controls {
+		flex-direction: column;
+	}
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+	:root {
+		color: #213547;
+		background-color: #ffffff;
+	}
+	a:hover {
+		color: #747bff;
+	}
+	button {
+		background-color: #f9f9f9;
+	}
 }

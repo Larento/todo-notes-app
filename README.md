@@ -1,18 +1,37 @@
-# Vue 3 + TypeScript + Vite
+# Установка
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```
+git clone https://github.com/larento/todo-notes-app
+cd todo-notes-app
+npm install
+```
 
-## Recommended IDE Setup
+# Запуск
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+```
+npm run dev
+```
 
-## Type Support For `.vue` Imports in TS
+На `localhost` запустится сервер `Vite`, перейти по ссылке в терминале.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+# Структура
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Приложение состоит из двух страниц: `NoteBrowserPage` и `NoteEditorPage`, а также окна диалога `Modal`. Состояние приложения отражено в глобальном объекте `store` в модуле `store.ts`. Объект `store` имеет различные методы для отслеживания истории изменений текущей заметки. Он состоит из полей:
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- `data`: данные о заметках
+- `state`: глобальное состояние
+- `modal`: `ref` на окно диалога `Modal`
+
+При изменении полей `data` и `state`, они записываются в хранилище `LocalStorage`. История изменений заметки имеет ограниченный размер и задается константой `UNDO_STACK_MAX_LENGTH` в модуле `options.ts`.
+
+Обе страницы имеют компонент `TopBar`, который состоит из заголовка страницы и панели кнопок. Компонент `NoteBrowserPage` представляет собой обозреватель всех сохраненных заметок. При добавлении или изменении заметки, приложение переходит в редактор заметок `NoteEditorPage`. При удалении заметки вызывается окно диалога для подтверждения действия.
+
+В редакторе заметок есть возможности:
+
+- переименовать заметку
+- добавить/удалить/изменить задачу
+- отменить/повторить последнее изменение
+- сохранить заметку
+- выйти из редактора
+
+При выходе из редактора c несохраненными изменениями необходимо подтверждение.
